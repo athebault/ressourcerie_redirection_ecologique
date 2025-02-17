@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 import os
 import pandas as pd
@@ -9,9 +9,9 @@ from utils import *
 
 # Get acces to database
 # Local
-load_dotenv()
-NOTION_KEY = os.getenv("NOTION_KEY")
-notion_database_id = os.getenv("notion_database_id")
+# load_dotenv()
+# NOTION_KEY = os.getenv("NOTION_KEY")
+# notion_database_id = os.getenv("notion_database_id")
 
 # Web
 NOTION_KEY = st.secrets("NOTION_KEY")
