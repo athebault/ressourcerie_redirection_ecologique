@@ -5,7 +5,6 @@ import numpy as np
 
 from email_validator import validate_email, EmailNotValidError
 
-
 mutiselect_cols = ["Thème", "Besoin", "Public", "Catégorie"]
 final_cols_order = [
     "Nom",
@@ -18,6 +17,19 @@ final_cols_order = [
     "URL",
     "Besoin",
 ]
+
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+def remote_css(url):
+    st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
+
+
+def icon(icon_name):
+    st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
 
 
 # Fonction permettant de supprimer les lignes n'ayant pas de ressources
@@ -60,9 +72,7 @@ def get_data_from_selection(data, col, selected_options):
 def define_filter(data, col_name, question):
     # Afficher les options
     if col_name in mutiselect_cols:
-        options = st.sidebar.multiselect(
-            question, get_options(data, col_name), default=[]
-        )
+        options = st.multiselect(question, get_options(data, col_name), default=[])
     else:
         options = st.pills(
             question, get_options(data, col_name), selection_mode="multi"
@@ -79,7 +89,7 @@ def show_ressources(data):
     for nom, url in zip(ressources, urls):
         st.subheader(nom)
         st.write(url)
-        st.link_button(f"Ouvrir {nom}", url)
+        st.link_button(f"Ouvrir **{nom}**", url)
         st.divider()
 
 
