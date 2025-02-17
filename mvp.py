@@ -7,10 +7,19 @@ from streamlit_extras.stylable_container import stylable_container
 from notion2pandas import Notion2PandasClient
 from utils import *
 
-# Get uptodate database
+# Get acces to database
+# Local
 load_dotenv()
-n2p = Notion2PandasClient(auth=os.getenv("NOTION_KEY"))
-df = n2p.from_notion_DB_to_dataframe(os.getenv("notion_database_id"))
+NOTION_KEY = os.getenv("NOTION_KEY")
+notion_database_id = os.getenv("notion_database_id")
+
+# Web
+# NOTION_KEY = st.secrets("NOTION_KEY")
+# notion_database_id = st.secrets("notion_database_id")
+
+# Get uptodate database
+n2p = Notion2PandasClient(auth=NOTION_KEY)
+df = n2p.from_notion_DB_to_dataframe(notion_database_id)
 df = remove_empty_lines(df)
 
 # Streamlit Application
