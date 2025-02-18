@@ -2,6 +2,6 @@ email_validator==2.2.0
 notion2pandas==1.4.3
 numpy==2.2.3
 pandas==2.2.3
-streamlit==1.42.0
+python-dotenv==1.0.1
+streamlit==1.42.1
 streamlit_extras==0.5.5
-python==3.9
