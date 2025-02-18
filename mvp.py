@@ -1,4 +1,4 @@
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 import os
 import pandas as pd
@@ -9,13 +9,13 @@ from utils import *
 
 # Get acces to database
 # Local
-# load_dotenv()
-# NOTION_KEY = os.getenv("NOTION_KEY")
-# notion_database_id = os.getenv("notion_database_id")
+load_dotenv()
+NOTION_KEY = os.getenv("NOTION_KEY")
+notion_database_id = os.getenv("notion_database_id")
 
 # Web
-NOTION_KEY = st.secrets["NOTION_KEY"]
-notion_database_id = st.secrets["notion_database_id"]
+# NOTION_KEY = st.secrets["NOTION_KEY"]
+# notion_database_id = st.secrets["notion_database_id"]
 
 # Get uptodate database
 n2p = Notion2PandasClient(auth=NOTION_KEY)
@@ -60,12 +60,42 @@ def app():
 
     st.sidebar.header("\U0001f50d Filtres")
 
-    # Initialisation du dataframe filtré (vide au départ)
+    # Initialisation du dataframe filtré
+    filtered_data_content = df.copy()
     filtered_data = df.copy()
 
-    with st.container(border=True):
-        with st.form("Filtres_format"):
-            st.subheader("Format des ressources")
+    # Filtre du dataframe
+    with st.sidebar.form("Filtres"):
+        # Appliquer les filtres
+        filtered_data_content = define_filter(
+            filtered_data_content, "Besoin", "## Quel est votre besoin ?"
+        )
+        filtered_data_content = define_filter(
+            filtered_data_content, "Thème", "## Quelle thématique voulez-vous creuser ?"
+        )
+        filtered_data_content = define_filter(
+            filtered_data_content, "Catégorie", "## Un sujet plus précis encore ?"
+        )
+        filtered_data_content = define_filter(
+            filtered_data_content, "Public", "Pour quel public?"
+        )
+        submitted = st.form_submit_button("Afficher les ressources")
+
+    with st.form("Filtres_format"):
+        st.subheader("""⬇️ Format des Ressources""")
+        if submitted:
+            filtered_data_content = define_filter(
+                filtered_data_content,
+                "Type",
+                "## Avez-vous un ou des formats privilégiés",
+            )
+            filtered_data_content = define_filter(
+                filtered_data_content,
+                "durée",
+                "## Combien de temps souhaitez-vous passer sur ces ressources",
+            )
+            selected_data = filtered_data_content
+        else:
             filtered_data = define_filter(
                 filtered_data, "Type", "## Avez-vous un ou des formats privilégiés"
             )
@@ -74,36 +104,19 @@ def app():
                 "durée",
                 "## Combien de temps souhaitez-vous passer sur ces ressources",
             )
-            submitted_format = st.form_submit_button("Afficher les ressources")
-
-    with st.sidebar.form("Filtres"):
-        # Appliquer les filtres
-        filtered_data = define_filter(
-            filtered_data, "Besoin", "## Quel est votre besoin ?"
-        )
-        filtered_data = define_filter(
-            filtered_data, "Thème", "## Quelle thématique voulez-vous creuser ?"
-        )
-        filtered_data = define_filter(filtered_data, "Public", "Pour quel public?")
-        submitted = st.form_submit_button("Afficher les ressources")
+            selected_data = filtered_data
+        submitted_format = st.form_submit_button("Afficher les ressources")
 
     # Vérifier si l'utilisateur a appliqué au moins un filtre
-    if (submitted or submitted_format) and not filtered_data.empty:
+    with st.container():
+        st.header("Ressources proposées")
 
-        # Affichage des résultats seulement si des filtres sont appliqués
-        with st.container():
-            st.header("Ressources proposées")
-            show_ressources(filtered_data)
+        if submitted and not submitted_format:
+            show_ressources(filtered_data_content)
 
-            details = st.checkbox("Plus de détails ?")
-            if details:
-                st.dataframe(filtered_data[final_cols_order])
-
-    elif submitted:
-        with st.container():
-            st.write(
-                "### Aucune ressource ne correspond à votre recherche pour l'instant."
-            )
+        else:
+            # Affichage des résultats seulement si des filtres sont appliqués
+            show_ressources(selected_data)
 
     with st.container():
         st.write("Pour suivre l'évolution de cette plateforme, laissez-nous votre mail")
