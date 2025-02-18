@@ -14,8 +14,8 @@ from utils import *
 # notion_database_id = os.getenv("notion_database_id")
 
 # Web
-NOTION_KEY = st.secrets("NOTION_KEY")
-notion_database_id = st.secrets("notion_database_id")
+NOTION_KEY = st.secrets["NOTION_KEY"]
+notion_database_id = st.secrets["notion_database_id"]
 
 # Get uptodate database
 n2p = Notion2PandasClient(auth=NOTION_KEY)
