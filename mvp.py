@@ -105,6 +105,7 @@ def app():
                 "## Combien de temps souhaitez-vous passer sur ces ressources",
             )
             selected_data = filtered_data
+
         submitted_format = st.form_submit_button("Afficher les ressources")
 
     # Vérifier si l'utilisateur a appliqué au moins un filtre

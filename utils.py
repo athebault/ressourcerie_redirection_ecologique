@@ -120,22 +120,22 @@ def show_ressources(data):
         # Affichage des tags correctement (évite de passer toute la colonne au lieu de la valeur)
         if theme:
             st.markdown(
-                f"*Thème : {render_tags(theme, bg_color="purple")}*",
+                f"*Thème : {render_tags(theme, bg_color='purple')}*",
                 unsafe_allow_html=True,
             )
         else:
             st.markdown(f"*Thème : Non défini*", unsafe_allow_html=True)
         st.markdown(
-            f"*Catégorie : {render_tags(categ, bg_color="green")}*",
+            f"*Catégorie : {render_tags(categ, bg_color='green')}*",
             unsafe_allow_html=True,
         )
         st.markdown(
-            f"*Public : {render_tags(public, bg_color="orange")}*",
+            f"*Public : {render_tags(public, bg_color='orange')}*",
             unsafe_allow_html=True,
         )
         st.markdown(f"*Niveau : {render_tags(niveau)}*", unsafe_allow_html=True)
         st.markdown(
-            f"*Format : {render_tags(format, bg_color="yellow", text_color="grey")}*",
+            f"*Format : {render_tags(format, bg_color='yellow', text_color='grey')}*",
             unsafe_allow_html=True,
         )
 
