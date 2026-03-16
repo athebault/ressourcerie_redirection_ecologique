@@ -1,0 +1,14 @@
+[project]
+name = "ressourcerie-redirection-ecologique"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "dotenv>=0.9.9",
+    "email-validator>=2.3.0",
+    "notion2pandas>=1.6.3",
+    "pandas>=2.3.3",
+    "streamlit>=1.54.0",
+    "streamlit-extras>=0.7.8",
+]

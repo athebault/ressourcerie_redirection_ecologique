@@ -54,7 +54,8 @@ def app():
         )
         st.write(
             """
-            La raison d'être de cette **ressourcerie** est lblblb
+            La raison d'être de cette **ressourcerie** est de grouper au même endroit différents types et formats de ressources 
+            en lien avec la redirection écologiques. Ces ressources seront régulièrement mises à jour en fonction de mes lectures.
             """
         )
 
@@ -126,6 +127,15 @@ def app():
 
         st.header(f"Merci pour votre visite!")
 
+    # Footer
+    st.markdown("---")
+    st.markdown(
+         "<div style='text-align: center;'><b>Une solution développée par Aurélie Thébault - EcoLibre 2025</b></div>",
+         unsafe_allow_html=True)
+    st.markdown(
+            "<div style='text-align: center;'>📬 aurelie@ecolibres.fr</div>",
+            unsafe_allow_html=True,
+        )
 
 if __name__ == "__main__":
     app()
